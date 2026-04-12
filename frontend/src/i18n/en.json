@@ -1,0 +1,17 @@
+{
+  "common": {
+    "login": "Log In",
+    "register": "Register",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "buyer": "Buyer",
+    "supplier": "Supplier",
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "survey": "Survey",
+    "settings": "Settings"
+  }
+}
