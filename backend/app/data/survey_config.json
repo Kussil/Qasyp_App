@@ -1,0 +1,46 @@
+{
+  "sections": [
+    {
+      "id": "legal",
+      "title": { "kk": "Заңды деректемелер", "ru": "Юридические данные", "en": "Legal & Registration" },
+      "questions": [
+        { "id": "company_name", "type": "text", "label": {"kk": "Компания атауы", "ru": "Название компании", "en": "Company name"}, "required": true, "max_length": 200, "roles": ["buyer", "supplier"] },
+        { "id": "bin", "type": "text", "label": {"kk": "БСН", "ru": "БИН", "en": "BIN"}, "required": true, "validation": "^[0-9]{12}$", "roles": ["buyer", "supplier"] },
+        { "id": "legal_entity_type", "type": "select", "label": {"kk": "Заңды тұлға түрі", "ru": "Тип юридического лица", "en": "Legal entity type"}, "required": true, "options": ["TOO","IP","AO","GP","OTHER"], "roles": ["buyer","supplier"] },
+        { "id": "vat_registered", "type": "boolean", "label": {"kk": "НДС төлеушісі", "ru": "Плательщик НДС", "en": "VAT registered"}, "required": true, "roles": ["buyer","supplier"] },
+        { "id": "vat_certificate_number", "type": "text", "label": {"kk": "НДС куәлігінің нөмірі", "ru": "Номер свидетельства НДС", "en": "VAT certificate number"}, "required": false, "conditional_on": {"field": "vat_registered","value": true}, "roles": ["buyer","supplier"] }
+      ]
+    },
+    {
+      "id": "business_profile",
+      "title": {"kk": "Іскерлік профиль", "ru": "Бизнес-профиль", "en": "Business Profile"},
+      "questions": [
+        { "id": "industry_sector", "type": "select", "label": {"kk": "Сала", "ru": "Отрасль", "en": "Industry sector"}, "required": true, "options": ["Строительство","Сельское хозяйство","Производство","Логистика и транспорт","IT и технологии","Торговля","Нефть и газ","Финансы","Медицина и фармацевтика","Образование","Другое"], "roles": ["buyer","supplier"] },
+        { "id": "business_scope", "type": "textarea", "label": {"kk": "Бизнестің мәні", "ru": "Описание бизнеса", "en": "Business scope"}, "required": true, "max_length": 500, "roles": ["buyer","supplier"] },
+        { "id": "products_services", "type": "multitext", "label": {"kk": "Өнімдер/қызметтер", "ru": "Товары/услуги", "en": "Products/services"}, "required": true, "roles": ["buyer","supplier"] },
+        { "id": "volume_requirements", "type": "text", "label": {"kk": "Көлем талаптары", "ru": "Объём", "en": "Volume requirements"}, "required": false, "roles": ["buyer","supplier"] },
+        { "id": "frequency", "type": "select", "label": {"kk": "Жиілік", "ru": "Частота", "en": "Frequency"}, "required": false, "options": ["ONE_TIME","WEEKLY","MONTHLY","QUARTERLY","ANNUAL"], "roles": ["buyer","supplier"] },
+        { "id": "quality_standards", "type": "multitext", "label": {"kk": "Сапа стандарттары", "ru": "Стандарты качества", "en": "Quality standards"}, "required": false, "roles": ["buyer","supplier"] },
+        { "id": "delivery_requirements", "type": "textarea", "label": {"kk": "Жеткізу шарттары", "ru": "Условия доставки", "en": "Delivery requirements"}, "required": false, "roles": ["buyer","supplier"] }
+      ]
+    },
+    {
+      "id": "financial",
+      "title": {"kk": "Қаржы және өсу", "ru": "Финансы и рост", "en": "Financial & Growth"},
+      "questions": [
+        { "id": "annual_revenue_range", "type": "select", "label": {"kk": "Жылдық табыс", "ru": "Годовой оборот", "en": "Annual revenue range"}, "required": false, "options": ["BELOW_10M","10M_50M","50M_200M","200M_1B","ABOVE_1B","PREFER_NOT_TO_SAY"], "roles": ["buyer","supplier"] },
+        { "id": "growth_target", "type": "textarea", "label": {"kk": "Өсу мақсаты", "ru": "Цели роста", "en": "Growth target"}, "required": false, "roles": ["buyer","supplier"] }
+      ]
+    },
+    {
+      "id": "geographic",
+      "title": {"kk": "Аймақ және серіктес", "ru": "Регион и партнёр", "en": "Geographic & Partner"},
+      "questions": [
+        { "id": "operating_regions", "type": "multiselect", "label": {"kk": "Жұмыс аймақтары", "ru": "Регионы работы", "en": "Operating regions"}, "required": true, "options": ["ALMATY_CITY","ASTANA_CITY","SHYMKENT_CITY","ALMATY_REGION","AKMOLA","AKTOBE","ATYRAU","EAST_KZ","ZHAMBYL","WEST_KZ","KARAGANDA","KOSTANAY","KYZYLORDA","MANGYSTAU","PAVLODAR","NORTH_KZ","TURKESTAN","ABAI","ZHETYSU","ULYTAU"], "roles": ["buyer","supplier"] },
+        { "id": "willing_cross_border", "type": "boolean", "label": {"kk": "Шетелдік серіктеспен жұмыс", "ru": "Работа с иностранными партнёрами", "en": "Willing to work cross-border"}, "required": false, "roles": ["buyer","supplier"] },
+        { "id": "preferred_partner_profile", "type": "textarea", "label": {"kk": "Серіктес сипаты", "ru": "Профиль предпочтительного партнёра", "en": "Preferred partner profile"}, "required": false, "roles": ["buyer","supplier"] },
+        { "id": "exclusion_criteria", "type": "textarea", "label": {"kk": "Шеттету критерийлері", "ru": "Критерии исключения", "en": "Exclusion criteria"}, "required": false, "roles": ["buyer","supplier"] }
+      ]
+    }
+  ]
+}
