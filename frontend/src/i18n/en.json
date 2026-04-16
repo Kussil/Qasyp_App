@@ -13,5 +13,10 @@
     "dashboard": "Dashboard",
     "survey": "Survey",
     "settings": "Settings"
+  },
+  "paywall": {
+    "unlock": "Unlock full list",
+    "locked": "Locked",
+    "demo_mode": "Demo mode"
   }
 }
