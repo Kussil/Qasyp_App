@@ -8,15 +8,21 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-COMPLEMENTARY_ROLE = {"BUYER": "SUPPLIER", "SUPPLIER": "BUYER", "buyer": "supplier", "supplier": "buyer"}
+COMPLEMENTARY_ROLES = {
+    "BUYER": ["SUPPLIER", "BOTH"],
+    "SUPPLIER": ["BUYER", "BOTH"],
+    "buyer": ["supplier", "both"],
+    "supplier": ["buyer", "both"],
+}
 CACHE_TTL = 3600  # 1 hour
 
 
 def build_qdrant_filter(user_profile) -> dict:
     """Build Qdrant filter conditions for hard filtering."""
-    complementary = COMPLEMENTARY_ROLE.get(user_profile.role, "SUPPLIER")
+    target_roles = COMPLEMENTARY_ROLES.get(user_profile.role, ["SUPPLIER", "BOTH"])
     must = [
-        {"key": "role", "match": {"value": complementary}}
+        {"key": "role", "match": {"any": target_roles}},
+        {"key": "embedding_model_version", "match": {"value": settings.EMBEDDING_MODEL_VERSION}},
     ]
     # Region filter: skip if cross-border willing
     if not user_profile.willing_cross_border:
@@ -75,7 +81,10 @@ async def search_matches(user_profile, limit: int = 20, offset: int = 0) -> List
         # Build filter object
         must_conditions = []
         for cond in qdrant_filter.get("must", []):
-            must_conditions.append(FieldCondition(key=cond["key"], match=MatchValue(value=cond["match"]["value"])))
+            if "any" in cond["match"]:
+                must_conditions.append(FieldCondition(key=cond["key"], match=MatchAny(any=cond["match"]["any"])))
+            else:
+                must_conditions.append(FieldCondition(key=cond["key"], match=MatchValue(value=cond["match"]["value"])))
 
         should_conditions = []
         for cond in qdrant_filter.get("should", []):
@@ -86,13 +95,14 @@ async def search_matches(user_profile, limit: int = 20, offset: int = 0) -> List
 
         filter_obj = Filter(must=must_conditions, should=should_conditions if should_conditions else None)
 
-        results = client.search(
+        response = client.query_points(
             collection_name=settings.QDRANT_COLLECTION,
-            query_vector=vector,
+            query=vector,
             query_filter=filter_obj,
             limit=limit + offset,
             with_payload=True,
         )
+        results = response.points
 
         matches = []
         for hit in results[offset:offset + limit]:

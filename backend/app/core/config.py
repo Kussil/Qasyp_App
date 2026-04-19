@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     ANTHROPIC_API_KEY: str = ""
-    EMBEDDING_MODEL_VERSION: str = "multilingual-e5-large"
+    EMBEDDING_MODEL_VERSION: str = "paraphrase-multilingual-MiniLM-L12-v2"
     ENVIRONMENT: str = "development"
     DEMO_MODE: bool = False
     ALLOWED_ORIGINS: List[str] = []

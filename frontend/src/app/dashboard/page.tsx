@@ -5,8 +5,10 @@ import { EmptyState } from "@/components/features/dashboard/EmptyState";
 import { LoadingState } from "@/components/features/dashboard/LoadingState";
 import { useMatches } from "@/hooks/useMatches";
 import { api } from "@/lib/api";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 export default function DashboardPage() {
+  useRequireAuth();
   const { data, loading, error, refetch } = useMatches();
 
   async function handleUnlock() {
